@@ -1,0 +1,31 @@
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText 
+fd=open('pulkitdb1.txt','r')
+list1=(fd.read())
+list=(list1.split(sep='\n'))
+print(list)
+host="smtp.gmail.com"
+port=587
+user="bpulkit151@gmail.com"
+passw="pulkit123456"
+from_email=user
+list=["pulket_bhatnagar@rediffmail.com","bpulkit151@gmail.com","yashagrawal5757@gmail.com"]
+email_conn=smtplib.SMTP(host,port)
+email_conn.ehlo()
+email_conn.starttls()
+email_conn.login(user,passw)
+email_conn.sendmail(from_email,list,"hello this is my first email service for dbms project")
+the_msg=MIMEMultipart("alternative")
+the_msg['subject']="data inserted"
+the_msg['from']=user
+#the_msg['to']=list[: :]
+plain_text="testing the palin texrt"
+html_text="""<p>Thankyou for choosing our projects"""
+
+part1=MIMEText(plain_text,"plain")
+part2=MIMEText(html_text,"html")
+the_msg.attach(part1)
+the_msg.attach(part2)
+email_conn.sendmail(from_email,list,the_msg.as_string())
+email_conn.quit()
